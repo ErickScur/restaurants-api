@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
-import { GetWorkingScheduleRepository } from 'src/data/protocols/db/working-schedules/';
 import { PrismaModule } from '../../config/prisma.module';
 import { WorkingSchedulesPrismaRepository } from './working-schedules-prisma-repository';
+import {
+  GetWorkingScheduleRepository,
+  CreateWorkingScheduleRepository,
+} from 'src/data/protocols/db/working-schedules';
 
 @Module({
   imports: [PrismaModule],
@@ -10,7 +13,11 @@ import { WorkingSchedulesPrismaRepository } from './working-schedules-prisma-rep
       provide: GetWorkingScheduleRepository,
       useClass: WorkingSchedulesPrismaRepository,
     },
+    {
+      provide: CreateWorkingScheduleRepository,
+      useClass: WorkingSchedulesPrismaRepository,
+    },
   ],
-  exports: [GetWorkingScheduleRepository],
+  exports: [GetWorkingScheduleRepository, CreateWorkingScheduleRepository],
 })
 export class WorkingScheduleRepositoriesModule {}

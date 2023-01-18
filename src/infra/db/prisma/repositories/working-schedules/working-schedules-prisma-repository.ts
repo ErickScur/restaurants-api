@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { GetWorkingScheduleRepository } from 'src/data/protocols/db/working-schedules/db-get-working-schedule';
 import { WorkingSchedule } from 'src/domain/models/working-schedule';
 import { PrismaService } from '../../config/prisma.service';
+import {
+  GetWorkingScheduleRepository,
+  CreateWorkingScheduleRepository,
+} from 'src/data/protocols/db/working-schedules';
+import { CreateWorkingScheduleModel } from 'src/domain/use-cases/working-schedules';
 
 @Injectable()
 export class WorkingSchedulesPrismaRepository
-  implements GetWorkingScheduleRepository
+  implements GetWorkingScheduleRepository, CreateWorkingScheduleRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -19,6 +23,22 @@ export class WorkingSchedulesPrismaRepository
           id: true,
           isOpened: true,
           startHour: true,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async create(
+    restaurantId: string,
+    workingSchedule: CreateWorkingScheduleModel,
+  ): Promise<WorkingSchedule> {
+    try {
+      return await this.prisma.workingDay.create({
+        data: {
+          ...workingSchedule,
+          restaurantId,
         },
       });
     } catch (error) {
