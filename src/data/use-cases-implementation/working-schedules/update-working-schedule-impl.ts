@@ -38,13 +38,32 @@ export class UpdateWorkingScheduleImplementation
       if (!restaurantId)
         throw new NotFoundException('Working Schedule was not found!');
 
-      const isDayValid = this.validateDay(day);
-      if (!isDayValid) {
-        throw new BadRequestException(`Invalid day: ${day}`);
+      if (day) {
+        const isDayValid = this.validateDay(day);
+        if (!isDayValid) {
+          throw new BadRequestException(`Invalid day: ${day}`);
+        }
       }
 
-      if (!isOpened) {
-        return await this.saveToDb(id, workingSchedule);
+      if (isOpened === false) {
+        return await this.saveToDb(id, {
+          day: workingSchedule.day,
+          endHour: null,
+          startHour: null,
+          isOpened: false,
+        });
+      } else {
+        if (!workingSchedule.endHour && !workingSchedule.startHour) {
+          return;
+        }
+      }
+
+      if (workingSchedule.endHour && !workingSchedule.startHour) {
+        throw new BadRequestException('Please provide start hour');
+      }
+
+      if (workingSchedule.startHour && !workingSchedule.endHour) {
+        throw new BadRequestException('Please provide end hour');
       }
 
       const existingSchedules =
@@ -55,30 +74,32 @@ export class UpdateWorkingScheduleImplementation
 
       if (existingSchedules) {
         for (const schedule of existingSchedules) {
-          if (
-            this.datesRepository.isAfter(startHour, schedule.startHour) &&
-            this.datesRepository.isBefore(endHour, schedule.endHour) &&
-            schedule.id !== id
-          ) {
-            throw new BadRequestException('Time range is already in use');
-          }
+          if (schedule.isOpened && schedule.endHour && schedule.startHour) {
+            if (
+              this.datesRepository.isAfter(startHour, schedule.startHour) &&
+              this.datesRepository.isBefore(endHour, schedule.endHour) &&
+              schedule.id !== id
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
 
-          if (
-            this.datesRepository.isAfter(startHour, schedule.startHour) &&
-            this.datesRepository.isAfter(endHour, schedule.endHour) &&
-            this.datesRepository.isBefore(startHour, schedule.endHour) &&
-            schedule.id !== id
-          ) {
-            throw new BadRequestException('Time range is already in use');
-          }
+            if (
+              this.datesRepository.isAfter(startHour, schedule.startHour) &&
+              this.datesRepository.isAfter(endHour, schedule.endHour) &&
+              this.datesRepository.isBefore(startHour, schedule.endHour) &&
+              schedule.id !== id
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
 
-          if (
-            this.datesRepository.isBefore(startHour, schedule.startHour) &&
-            this.datesRepository.isBefore(endHour, schedule.endHour) &&
-            this.datesRepository.isAfter(endHour, schedule.startHour) &&
-            schedule.id !== id
-          ) {
-            throw new BadRequestException('Time range is already in use');
+            if (
+              this.datesRepository.isBefore(startHour, schedule.startHour) &&
+              this.datesRepository.isBefore(endHour, schedule.endHour) &&
+              this.datesRepository.isAfter(endHour, schedule.startHour) &&
+              schedule.id !== id
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
           }
         }
       }
@@ -96,7 +117,9 @@ export class UpdateWorkingScheduleImplementation
     try {
       return await this.updateWorkingSchedule.update(id, {
         ...workingSchedule,
-        day: this.capitalize(workingSchedule.day),
+        day: workingSchedule.day
+          ? this.capitalize(workingSchedule.day)
+          : undefined,
       });
     } catch (error) {
       throw error;

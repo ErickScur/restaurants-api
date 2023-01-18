@@ -42,7 +42,12 @@ export class CreateWorkingScheduleImplementation
       }
 
       if (!isOpened) {
-        return await this.saveToDb(restaurantId, workingSchedule);
+        return await this.saveToDb(restaurantId, {
+          day: workingSchedule.day,
+          endHour: null,
+          startHour: null,
+          isOpened: false,
+        });
       }
 
       const existingSchedules =
@@ -53,27 +58,29 @@ export class CreateWorkingScheduleImplementation
 
       if (existingSchedules) {
         for (const schedule of existingSchedules) {
-          if (
-            this.datesRepository.isAfter(startHour, schedule.startHour) &&
-            this.datesRepository.isBefore(endHour, schedule.endHour)
-          ) {
-            throw new BadRequestException('Time range is already in use');
-          }
+          if (schedule.isOpened && schedule.startHour && schedule.endHour) {
+            if (
+              this.datesRepository.isAfter(startHour, schedule.startHour) &&
+              this.datesRepository.isBefore(endHour, schedule.endHour)
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
 
-          if (
-            this.datesRepository.isAfter(startHour, schedule.startHour) &&
-            this.datesRepository.isAfter(endHour, schedule.endHour) &&
-            this.datesRepository.isBefore(startHour, schedule.endHour)
-          ) {
-            throw new BadRequestException('Time range is already in use');
-          }
+            if (
+              this.datesRepository.isAfter(startHour, schedule.startHour) &&
+              this.datesRepository.isAfter(endHour, schedule.endHour) &&
+              this.datesRepository.isBefore(startHour, schedule.endHour)
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
 
-          if (
-            this.datesRepository.isBefore(startHour, schedule.startHour) &&
-            this.datesRepository.isBefore(endHour, schedule.endHour) &&
-            this.datesRepository.isAfter(endHour, schedule.startHour)
-          ) {
-            throw new BadRequestException('Time range is already in use');
+            if (
+              this.datesRepository.isBefore(startHour, schedule.startHour) &&
+              this.datesRepository.isBefore(endHour, schedule.endHour) &&
+              this.datesRepository.isAfter(endHour, schedule.startHour)
+            ) {
+              throw new BadRequestException('Time range is already in use');
+            }
           }
         }
       }
