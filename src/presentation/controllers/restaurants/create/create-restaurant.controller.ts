@@ -1,13 +1,27 @@
-import { Controller } from '@nestjs/common';
-import { Restaurant } from 'src/domain/models/restaurant';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateRestaurant } from 'src/domain/use-cases/restaurants/create-restaurant';
+import { HttpBadRequestError } from 'src/presentation/swagger';
 import { CreateRestaurantVM } from 'src/presentation/view-models/restaurants/create/create-restaurant-vm';
+import { RestaurantResponseViewModel } from 'src/presentation/view-models/restaurants/restaurant-vm';
 
+@ApiTags('Restaurants')
 @Controller('restaurants')
 export class CreateRestaurantController {
   constructor(private readonly createRestaurant: CreateRestaurant) {}
 
-  async handle(viewModel: CreateRestaurantVM): Promise<Restaurant> {
-    return await this.createRestaurant.create(viewModel);
+  @ApiOperation({ summary: 'Create Restaurant' })
+  @ApiResponse({
+    status: 201,
+    description: 'Created',
+    type: RestaurantResponseViewModel,
+  })
+  @ApiResponse(HttpBadRequestError)
+  @Post()
+  async handle(
+    @Body() viewModel: CreateRestaurantVM,
+  ): Promise<RestaurantResponseViewModel> {
+    const restaurant = await this.createRestaurant.create(viewModel);
+    return RestaurantResponseViewModel.toViewModel(restaurant);
   }
 }
