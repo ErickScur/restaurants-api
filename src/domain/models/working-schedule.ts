@@ -1,6 +1,7 @@
 export class WorkingSchedule {
   id: string;
-  startHout?: string;
+  day: string;
+  startHour?: string;
   endHour?: string;
   isOpened: boolean;
 }

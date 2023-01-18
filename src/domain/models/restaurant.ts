@@ -7,7 +7,7 @@ export interface RestaurantProps {
 }
 
 export class Restaurant {
-  id?: string;
+  id: string;
   name: string;
   cnpj: string;
   type: string;
