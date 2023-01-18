@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CheckIsOpenedVM {
-  @ApiProperty({ example: '2023-08-08T13:24:38.409Z' })
+  @ApiProperty({ example: '2023-01-23T15:00:51.198Z' })
   @IsNotEmpty()
   date: Date;
 }
