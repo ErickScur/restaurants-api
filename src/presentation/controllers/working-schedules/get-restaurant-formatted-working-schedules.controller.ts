@@ -1,7 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GetFormattedWorkingSchedule } from 'src/domain/use-cases/working-schedules';
-import { HttpBadRequestError } from 'src/presentation/swagger';
 import { GetRestaurantWorkingScheduleVM } from 'src/presentation/view-models/working-schedules/get-restaurant-working-schedule-vm';
 
 @ApiTags('Working Schedules')
@@ -18,7 +17,6 @@ export class GetRestaurantFormattedWorkingScheduleController {
     type: GetRestaurantWorkingScheduleVM,
     isArray: true,
   })
-  @ApiResponse(HttpBadRequestError)
   @Get(':restaurantId/working-schedules/formatted')
   async handle(@Param('restaurantId') restaurantId: string) {
     return await this.getRestaurantWorkingSchedule.getWorkingSchedule(
