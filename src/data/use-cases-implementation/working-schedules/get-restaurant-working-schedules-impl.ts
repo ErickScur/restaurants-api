@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { GetRestaurantByIdRepository } from 'src/data/protocols/db/restaurants';
 import { GetWorkingScheduleRepository } from 'src/data/protocols/db/working-schedules';
 import { WorkingSchedule } from 'src/domain/models/working-schedule';
 import { GetRestaurantWorkingSchedules } from 'src/domain/use-cases/working-schedules';
@@ -9,10 +10,14 @@ export class GetRestaurantWorkingSchedulesImplementation
 {
   constructor(
     private readonly getWorkingScheduleRepository: GetWorkingScheduleRepository,
+    private readonly getRestaurantById: GetRestaurantByIdRepository,
   ) {}
 
   async getWorkingSchedules(restaurantId: string): Promise<WorkingSchedule[]> {
     try {
+      const restaurant = await this.getRestaurantById.getById(restaurantId);
+      if (!restaurant) throw new NotFoundException('Restaurant was not found!');
+
       const schedule =
         await this.getWorkingScheduleRepository.getWorkingSchedule(
           restaurantId,

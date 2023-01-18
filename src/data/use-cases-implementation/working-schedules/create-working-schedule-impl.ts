@@ -1,5 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DatesRepository } from 'src/data/protocols/dates/dates-repository';
+import { GetRestaurantByIdRepository } from 'src/data/protocols/db/restaurants';
 import {
   CreateWorkingScheduleRepository,
   GetDayWorkingSchedulesRepository,
@@ -18,6 +23,7 @@ export class CreateWorkingScheduleImplementation
     private readonly getDayWorkingSchedules: GetDayWorkingSchedulesRepository,
     private readonly createWorkingSchedule: CreateWorkingScheduleRepository,
     private readonly datesRepository: DatesRepository,
+    private readonly getRestaurantById: GetRestaurantByIdRepository,
   ) {}
 
   async create(
@@ -26,6 +32,9 @@ export class CreateWorkingScheduleImplementation
   ): Promise<WorkingSchedule> {
     try {
       const { day, isOpened, endHour, startHour } = workingSchedule;
+
+      const restaurant = await this.getRestaurantById.getById(restaurantId);
+      if (!restaurant) throw new NotFoundException('Restaurant was not found!');
 
       const isDayValid = this.validateDay(day);
       if (!isDayValid) {

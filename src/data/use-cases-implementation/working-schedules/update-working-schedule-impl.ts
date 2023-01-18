@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DatesRepository } from 'src/data/protocols/dates/dates-repository';
 import {
   UpdateWorkingScheduleRepository,
@@ -31,6 +35,8 @@ export class UpdateWorkingScheduleImplementation
 
       const { restaurantId } =
         await this.getWorkingScheduleByIdRepository.getById(id);
+      if (!restaurantId)
+        throw new NotFoundException('Working Schedule was not found!');
 
       const isDayValid = this.validateDay(day);
       if (!isDayValid) {
@@ -51,7 +57,8 @@ export class UpdateWorkingScheduleImplementation
         for (const schedule of existingSchedules) {
           if (
             this.datesRepository.isAfter(startHour, schedule.startHour) &&
-            this.datesRepository.isBefore(endHour, schedule.endHour)
+            this.datesRepository.isBefore(endHour, schedule.endHour) &&
+            schedule.id !== id
           ) {
             throw new BadRequestException('Time range is already in use');
           }
@@ -59,7 +66,8 @@ export class UpdateWorkingScheduleImplementation
           if (
             this.datesRepository.isAfter(startHour, schedule.startHour) &&
             this.datesRepository.isAfter(endHour, schedule.endHour) &&
-            this.datesRepository.isBefore(startHour, schedule.endHour)
+            this.datesRepository.isBefore(startHour, schedule.endHour) &&
+            schedule.id !== id
           ) {
             throw new BadRequestException('Time range is already in use');
           }
@@ -67,7 +75,8 @@ export class UpdateWorkingScheduleImplementation
           if (
             this.datesRepository.isBefore(startHour, schedule.startHour) &&
             this.datesRepository.isBefore(endHour, schedule.endHour) &&
-            this.datesRepository.isAfter(endHour, schedule.startHour)
+            this.datesRepository.isAfter(endHour, schedule.startHour) &&
+            schedule.id !== id
           ) {
             throw new BadRequestException('Time range is already in use');
           }

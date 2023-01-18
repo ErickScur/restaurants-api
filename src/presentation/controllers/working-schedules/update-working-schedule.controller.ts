@@ -1,7 +1,10 @@
 import { Controller, Body, Param, Patch } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UpdateWorkingSchedule } from 'src/domain/use-cases/working-schedules';
-import { HttpBadRequestError } from 'src/presentation/swagger';
+import {
+  HttpBadRequestError,
+  HttpNotFoundError,
+} from 'src/presentation/swagger';
 import { UpdateWorkingScheduleVM } from 'src/presentation/view-models/working-schedules';
 import { WorkingScheduleVM } from 'src/presentation/view-models/working-schedules/working-schedule-vm';
 
@@ -17,6 +20,7 @@ export class UpdateWorkingScheduleController {
     type: WorkingScheduleVM,
   })
   @ApiResponse(HttpBadRequestError)
+  @ApiResponse(HttpNotFoundError)
   @Patch('working-schedules/:id')
   async handle(
     @Param('id') id: string,

@@ -13,9 +13,14 @@ import {
   GetRestaurantWorkingSchedules,
   UpdateWorkingSchedule,
 } from 'src/domain/use-cases/working-schedules';
+import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/restaurants/restaurants-repositories.module';
 
 @Module({
-  imports: [WorkingScheduleRepositoriesModule, DatesModule],
+  imports: [
+    WorkingScheduleRepositoriesModule,
+    RestaurantsRepositoriesModule,
+    DatesModule,
+  ],
   providers: [
     {
       provide: GetFormattedWorkingSchedule,
