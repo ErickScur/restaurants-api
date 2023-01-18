@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
 import { WorkingSchedulesUseCasesModule } from 'src/data/use-cases-implementation/working-schedules/working-schedules-use-cases.module';
-import { CreateWorkingScheduleController } from './';
+import {
+  CreateWorkingScheduleController,
+  GetRestaurantWorkingScheduleController,
+} from './';
 
 @Module({
   imports: [WorkingSchedulesUseCasesModule],
-  controllers: [CreateWorkingScheduleController],
+  controllers: [
+    CreateWorkingScheduleController,
+    GetRestaurantWorkingScheduleController,
+  ],
 })
 export class WorkingSchedulesControllersModule {}
