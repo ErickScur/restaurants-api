@@ -5,15 +5,22 @@ import {
   GetWorkingScheduleRepository,
   CreateWorkingScheduleRepository,
   GetDayWorkingSchedulesRepository,
+  DeleteWorkingScheduleRepository,
+  UpdateWorkingScheduleRepository,
 } from 'src/data/protocols/db/working-schedules';
-import { CreateWorkingScheduleModel } from 'src/domain/use-cases/working-schedules';
+import {
+  CreateWorkingScheduleModel,
+  UpdateWorkingScheduleModel,
+} from 'src/domain/use-cases/working-schedules';
 
 @Injectable()
 export class WorkingSchedulesPrismaRepository
   implements
     GetWorkingScheduleRepository,
     CreateWorkingScheduleRepository,
-    GetDayWorkingSchedulesRepository
+    GetDayWorkingSchedulesRepository,
+    DeleteWorkingScheduleRepository,
+    UpdateWorkingScheduleRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -63,6 +70,30 @@ export class WorkingSchedulesPrismaRepository
           ...workingSchedule,
           restaurantId,
         },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await this.prisma.workingDay.delete({
+        where: { id },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(
+    id: string,
+    workingSchedule: UpdateWorkingScheduleModel,
+  ): Promise<WorkingSchedule> {
+    try {
+      return await this.prisma.workingDay.update({
+        where: { id },
+        data: workingSchedule,
       });
     } catch (error) {
       throw error;
