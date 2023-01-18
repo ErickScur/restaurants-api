@@ -4,7 +4,7 @@ import { PrismaService } from '../../config/prisma.service';
 import {
   GetWorkingScheduleRepository,
   CreateWorkingScheduleRepository,
-  GetDayWorkingSchedules,
+  GetDayWorkingSchedulesRepository,
 } from 'src/data/protocols/db/working-schedules';
 import { CreateWorkingScheduleModel } from 'src/domain/use-cases/working-schedules';
 
@@ -13,7 +13,7 @@ export class WorkingSchedulesPrismaRepository
   implements
     GetWorkingScheduleRepository,
     CreateWorkingScheduleRepository,
-    GetDayWorkingSchedules
+    GetDayWorkingSchedulesRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
