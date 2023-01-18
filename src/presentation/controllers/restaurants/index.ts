@@ -1,3 +1,4 @@
-export * from './create/create-restaurant.controller';
-export * from './get-all/get-all-restaurants.controller';
-export * from './get-by-id/get-restaurant-by-id.controller';
+export * from './create-restaurant.controller';
+export * from './get-all-restaurants.controller';
+export * from './get-restaurant-by-id.controller';
+export * from './delete-restaurant.controller';
