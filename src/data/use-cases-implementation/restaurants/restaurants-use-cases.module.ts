@@ -21,6 +21,6 @@ import {
       useClass: GetAllRestaurantsImplementation,
     },
   ],
-  exports: [CreateRestaurant],
+  exports: [CreateRestaurant, GetAllRestaurants],
 })
 export class RestaurantsUseCasesModule {}
