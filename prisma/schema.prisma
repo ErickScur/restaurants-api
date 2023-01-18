@@ -15,10 +15,10 @@ model Restaurant {
   name            String
   type            String
   cnpj            String
-  workingSchedule WorkingSchedule[]
+  workingSchedule WorkingDay[]
 }
 
-model WorkingSchedule {
+model WorkingDay {
   id           String     @id @default(uuid())
   day          String
   startHour    String?

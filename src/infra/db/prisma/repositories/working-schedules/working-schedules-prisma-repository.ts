@@ -11,7 +11,7 @@ export class WorkingSchedulesPrismaRepository
 
   async getWorkingSchedule(restaurantId: string): Promise<WorkingSchedule[]> {
     try {
-      return await this.prisma.workingSchedule.findMany({
+      return await this.prisma.workingDay.findMany({
         where: { restaurantId },
         select: {
           day: true,
