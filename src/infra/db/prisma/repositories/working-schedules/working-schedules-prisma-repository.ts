@@ -4,12 +4,16 @@ import { PrismaService } from '../../config/prisma.service';
 import {
   GetWorkingScheduleRepository,
   CreateWorkingScheduleRepository,
+  GetDayWorkingSchedules,
 } from 'src/data/protocols/db/working-schedules';
 import { CreateWorkingScheduleModel } from 'src/domain/use-cases/working-schedules';
 
 @Injectable()
 export class WorkingSchedulesPrismaRepository
-  implements GetWorkingScheduleRepository, CreateWorkingScheduleRepository
+  implements
+    GetWorkingScheduleRepository,
+    CreateWorkingScheduleRepository,
+    GetDayWorkingSchedules
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -23,6 +27,22 @@ export class WorkingSchedulesPrismaRepository
           id: true,
           isOpened: true,
           startHour: true,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getDayWorkingSchedules(
+    restaurantId: string,
+    day: string,
+  ): Promise<WorkingSchedule[]> {
+    try {
+      return await this.prisma.workingDay.findMany({
+        where: {
+          restaurantId,
+          day,
         },
       });
     } catch (error) {

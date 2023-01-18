@@ -4,6 +4,7 @@ import { WorkingSchedulesPrismaRepository } from './working-schedules-prisma-rep
 import {
   GetWorkingScheduleRepository,
   CreateWorkingScheduleRepository,
+  GetDayWorkingSchedules,
 } from 'src/data/protocols/db/working-schedules';
 
 @Module({
@@ -17,7 +18,15 @@ import {
       provide: CreateWorkingScheduleRepository,
       useClass: WorkingSchedulesPrismaRepository,
     },
+    {
+      provide: GetDayWorkingSchedules,
+      useClass: WorkingSchedulesPrismaRepository,
+    },
   ],
-  exports: [GetWorkingScheduleRepository, CreateWorkingScheduleRepository],
+  exports: [
+    GetWorkingScheduleRepository,
+    CreateWorkingScheduleRepository,
+    GetDayWorkingSchedules,
+  ],
 })
 export class WorkingScheduleRepositoriesModule {}
