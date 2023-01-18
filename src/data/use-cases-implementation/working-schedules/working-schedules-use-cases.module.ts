@@ -4,10 +4,12 @@ import { WorkingScheduleRepositoriesModule } from 'src/infra/db/prisma/repositor
 import {
   GetFormattedWorkingScheduleImplementation,
   CreateWorkingScheduleImplementation,
+  GetRestaurantWorkingSchedulesImplementation,
 } from './';
 import {
   GetFormattedWorkingSchedule,
   CreateWorkingSchedule,
+  GetRestaurantWorkingSchedules,
 } from 'src/domain/use-cases/working-schedules';
 
 @Module({
@@ -21,7 +23,15 @@ import {
       provide: CreateWorkingSchedule,
       useClass: CreateWorkingScheduleImplementation,
     },
+    {
+      provide: GetRestaurantWorkingSchedules,
+      useClass: GetRestaurantWorkingSchedulesImplementation,
+    },
   ],
-  exports: [GetFormattedWorkingSchedule, CreateWorkingSchedule],
+  exports: [
+    GetFormattedWorkingSchedule,
+    CreateWorkingSchedule,
+    GetRestaurantWorkingSchedules,
+  ],
 })
 export class WorkingSchedulesUseCasesModule {}
