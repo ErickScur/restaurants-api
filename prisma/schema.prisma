@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id              String            @id @default(uuid())
+  name            String
+  type            String
+  cnpj            String
+  workingSchedule WorkingSchedule[]
+}
+
+model WorkingSchedule {
+  id           String     @id @default(uuid())
+  startHout    String?
+  endHour      String?
+  isOpened     Boolean
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+}
