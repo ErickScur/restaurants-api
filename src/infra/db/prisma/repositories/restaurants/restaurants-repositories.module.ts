@@ -5,6 +5,7 @@ import {
   CreateRestaurantRepository,
   GetAllRestaurantsRepository,
   GetRestaurantByIdRepository,
+  DeleteRestaurantRepository,
 } from 'src/data/protocols/db/restaurants';
 
 @Module({
@@ -22,11 +23,16 @@ import {
       provide: GetRestaurantByIdRepository,
       useClass: RestaurantsPrismaRepository,
     },
+    {
+      provide: DeleteRestaurantRepository,
+      useClass: RestaurantsPrismaRepository,
+    },
   ],
   exports: [
     CreateRestaurantRepository,
     GetAllRestaurantsRepository,
     GetRestaurantByIdRepository,
+    DeleteRestaurantRepository,
   ],
 })
 export class RestaurantsRepositoriesModule {}

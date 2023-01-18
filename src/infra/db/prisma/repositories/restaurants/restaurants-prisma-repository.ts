@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { GetRestaurantByIdRepository } from 'src/data/protocols/db/restaurants';
-import { CreateRestaurantRepository } from 'src/data/protocols/db/restaurants/db-create-restaurant';
-import { GetAllRestaurantsRepository } from 'src/data/protocols/db/restaurants/db-get-all-restaurants';
 import { Restaurant } from 'src/domain/models/restaurant';
 import { CreateRestaurantModel } from 'src/domain/use-cases/restaurants/create-restaurant';
 import { PrismaService } from '../../config/prisma.service';
+import {
+  CreateRestaurantRepository,
+  DeleteRestaurantRepository,
+  GetAllRestaurantsRepository,
+  GetRestaurantByIdRepository,
+} from 'src/data/protocols/db/restaurants';
 
 @Injectable()
 export class RestaurantsPrismaRepository
   implements
     CreateRestaurantRepository,
     GetAllRestaurantsRepository,
-    GetRestaurantByIdRepository
+    GetRestaurantByIdRepository,
+    DeleteRestaurantRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -47,6 +51,16 @@ export class RestaurantsPrismaRepository
         include: {
           workingSchedule: true,
         },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await this.prisma.restaurant.delete({
+        where: { id },
       });
     } catch (error) {
       throw error;
