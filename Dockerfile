@@ -1,11 +1,11 @@
-FROM node:16
+FROM node
 
-WORKDIR /app
+WORKDIR /usr/app
 
-COPY package.json .
+COPY package.json ./
 
-RUN npm install
-
+RUN npm install --omit --no-shrinkwrap --legacy-peer-deps
+ 
 COPY . .
 
 RUN npx prisma generate
@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 3009
 
-CMD ["npm", "start:prod"]
+CMD ["npm", "run", "start:prod"]
