@@ -42,7 +42,10 @@ export class WorkingSchedulesPrismaRepository
       return await this.prisma.workingDay.findMany({
         where: {
           restaurantId,
-          day,
+          day: {
+            mode: 'insensitive',
+            equals: day,
+          },
         },
       });
     } catch (error) {
