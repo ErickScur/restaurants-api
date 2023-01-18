@@ -5,6 +5,7 @@ import {
   CreateRestaurantController,
   GetAllRestaurantsController,
   GetRestaurantByIdController,
+  DeleteRestaurantController,
 } from './';
 
 @Module({
@@ -13,6 +14,7 @@ import {
     CreateRestaurantController,
     GetAllRestaurantsController,
     GetRestaurantByIdController,
+    DeleteRestaurantController,
   ],
 })
 export class RestaurantControllersModule {}
