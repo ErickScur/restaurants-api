@@ -4,6 +4,7 @@ import { PrismaModule } from '../../config/prisma.module';
 import {
   CreateRestaurantRepository,
   GetAllRestaurantsRepository,
+  GetRestaurantByIdRepository,
 } from 'src/data/protocols/db/restaurants';
 
 @Module({
@@ -17,7 +18,15 @@ import {
       provide: GetAllRestaurantsRepository,
       useClass: RestaurantsPrismaRepository,
     },
+    {
+      provide: GetRestaurantByIdRepository,
+      useClass: RestaurantsPrismaRepository,
+    },
   ],
-  exports: [CreateRestaurantRepository, GetAllRestaurantsRepository],
+  exports: [
+    CreateRestaurantRepository,
+    GetAllRestaurantsRepository,
+    GetRestaurantByIdRepository,
+  ],
 })
 export class RestaurantsRepositoriesModule {}

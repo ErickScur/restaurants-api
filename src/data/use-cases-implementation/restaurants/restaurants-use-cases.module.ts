@@ -3,10 +3,12 @@ import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/
 import {
   CreateRestaurant,
   GetAllRestaurants,
+  GetRestaurantById,
 } from 'src/domain/use-cases/restaurants';
 import {
   CreateRestaurantImplementation,
   GetAllRestaurantsImplementation,
+  GetRestaurantByIdImplementation,
 } from './';
 
 @Module({
@@ -20,7 +22,15 @@ import {
       provide: GetAllRestaurants,
       useClass: GetAllRestaurantsImplementation,
     },
+    {
+      provide: GetAllRestaurants,
+      useClass: GetAllRestaurantsImplementation,
+    },
+    {
+      provide: GetRestaurantById,
+      useClass: GetRestaurantByIdImplementation,
+    },
   ],
-  exports: [CreateRestaurant, GetAllRestaurants],
+  exports: [CreateRestaurant, GetAllRestaurants, GetRestaurantById],
 })
 export class RestaurantsUseCasesModule {}

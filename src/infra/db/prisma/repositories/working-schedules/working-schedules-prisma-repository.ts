@@ -13,6 +13,13 @@ export class WorkingSchedulesPrismaRepository
     try {
       return await this.prisma.workingSchedule.findMany({
         where: { restaurantId },
+        select: {
+          day: true,
+          endHour: true,
+          id: true,
+          isOpened: true,
+          startHour: true,
+        },
       });
     } catch (error) {
       throw error;

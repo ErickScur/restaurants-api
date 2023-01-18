@@ -18,10 +18,12 @@ export class GetFormattedWorkingScheduleImplementation
           restaurantId,
         );
 
-      const formatted = this.formatSchedule(workingSchedule);
-      const groupped = this.groupDays(formatted);
+      if (!workingSchedule.length) return [];
 
-      return groupped;
+      const formatted = this.formatSchedule(workingSchedule);
+      const grouped = this.groupDays(formatted);
+
+      return grouped;
     } catch (error) {
       throw error;
     }
@@ -65,22 +67,23 @@ export class GetFormattedWorkingScheduleImplementation
       return acc;
     }, {});
 
-    const scheduleStrings = Object.entries(groupedSchedule).map(
-      ([day, group]) => {
-        let str = day;
-        if (!group.isOpened) {
-          str += ': Fechado o dia todo';
-        } else {
-          for (let i = 0; i < group.startHour.length; i++) {
-            str += i === 0 ? ': Aberto entre ' : ' e entre ';
-            str += group.startHour[i] + ' e ' + group.endHour[i];
-          }
-        }
-        return str;
-      },
-    );
+    const scheduleStrings = Object.entries(groupedSchedule) as [
+      string,
+      WorkingSchedule,
+    ][];
 
-    return scheduleStrings;
+    return scheduleStrings.map(([day, group]) => {
+      let str = day;
+      if (!group.isOpened) {
+        str += ': Fechado o dia todo';
+      } else {
+        for (let i = 0; i < group.startHour.length; i++) {
+          str += i === 0 ? ': Aberto entre ' : ' e entre ';
+          str += group.startHour[i] + ' e ' + group.endHour[i];
+        }
+      }
+      return str;
+    });
   }
 
   private groupDays(schedule: string[]): string[] {
