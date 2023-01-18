@@ -20,7 +20,8 @@ model Restaurant {
 
 model WorkingSchedule {
   id           String     @id @default(uuid())
-  startHout    String?
+  day          String
+  startHour    String?
   endHour      String?
   isOpened     Boolean
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
