@@ -5,12 +5,14 @@ import {
   DeleteRestaurant,
   GetAllRestaurants,
   GetRestaurantById,
+  UpdateRestaurant,
 } from 'src/domain/use-cases/restaurants';
 import {
   CreateRestaurantImplementation,
   GetAllRestaurantsImplementation,
   GetRestaurantByIdImplementation,
   DeleteRestaurantImplementation,
+  UpdateRestaurantImplementation,
 } from './';
 
 @Module({
@@ -36,12 +38,17 @@ import {
       provide: DeleteRestaurant,
       useClass: DeleteRestaurantImplementation,
     },
+    {
+      provide: UpdateRestaurant,
+      useClass: UpdateRestaurantImplementation,
+    },
   ],
   exports: [
     CreateRestaurant,
     GetAllRestaurants,
     GetRestaurantById,
     DeleteRestaurant,
+    UpdateRestaurant,
   ],
 })
 export class RestaurantsUseCasesModule {}
