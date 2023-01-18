@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CreateRestaurant } from 'src/domain/use-cases/restaurants/create-restaurant';
 import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/restaurants/restaurants-repositories.module';
-import { CreateRestaurantImplementation } from './create-restaurant-impl';
+import {
+  CreateRestaurant,
+  GetAllRestaurants,
+} from 'src/domain/use-cases/restaurants';
+import {
+  CreateRestaurantImplementation,
+  GetAllRestaurantsImplementation,
+} from './';
 
 @Module({
   imports: [RestaurantsRepositoriesModule],
@@ -9,6 +15,10 @@ import { CreateRestaurantImplementation } from './create-restaurant-impl';
     {
       provide: CreateRestaurant,
       useClass: CreateRestaurantImplementation,
+    },
+    {
+      provide: GetAllRestaurants,
+      useClass: GetAllRestaurantsImplementation,
     },
   ],
   exports: [CreateRestaurant],
