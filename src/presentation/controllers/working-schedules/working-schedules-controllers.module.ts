@@ -5,6 +5,7 @@ import {
   GetRestaurantWorkingScheduleController,
   UpdateWorkingScheduleController,
   GetRestaurantFormattedWorkingScheduleController,
+  DeleteWorkingScheduleController,
 } from './';
 
 @Module({
@@ -14,6 +15,7 @@ import {
     GetRestaurantWorkingScheduleController,
     UpdateWorkingScheduleController,
     GetRestaurantFormattedWorkingScheduleController,
+    DeleteWorkingScheduleController,
   ],
 })
 export class WorkingSchedulesControllersModule {}

@@ -6,12 +6,14 @@ import {
   CreateWorkingScheduleImplementation,
   GetRestaurantWorkingSchedulesImplementation,
   UpdateWorkingScheduleImplementation,
+  DeleteWorkingScheduleImplementation,
 } from './';
 import {
   GetFormattedWorkingSchedule,
   CreateWorkingSchedule,
   GetRestaurantWorkingSchedules,
   UpdateWorkingSchedule,
+  DeleteWorkingSchedule,
 } from 'src/domain/use-cases/working-schedules';
 import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/restaurants/restaurants-repositories.module';
 
@@ -38,12 +40,17 @@ import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/
       provide: UpdateWorkingSchedule,
       useClass: UpdateWorkingScheduleImplementation,
     },
+    {
+      provide: DeleteWorkingSchedule,
+      useClass: DeleteWorkingScheduleImplementation,
+    },
   ],
   exports: [
     GetFormattedWorkingSchedule,
     CreateWorkingSchedule,
     GetRestaurantWorkingSchedules,
     UpdateWorkingSchedule,
+    DeleteWorkingSchedule,
   ],
 })
 export class WorkingSchedulesUseCasesModule {}
