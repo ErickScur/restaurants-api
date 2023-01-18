@@ -3,6 +3,8 @@ import { WorkingSchedulesUseCasesModule } from 'src/data/use-cases-implementatio
 import {
   CreateWorkingScheduleController,
   GetRestaurantWorkingScheduleController,
+  UpdateWorkingScheduleController,
+  GetRestaurantFormattedWorkingScheduleController,
 } from './';
 
 @Module({
@@ -10,6 +12,8 @@ import {
   controllers: [
     CreateWorkingScheduleController,
     GetRestaurantWorkingScheduleController,
+    UpdateWorkingScheduleController,
+    GetRestaurantFormattedWorkingScheduleController,
   ],
 })
 export class WorkingSchedulesControllersModule {}

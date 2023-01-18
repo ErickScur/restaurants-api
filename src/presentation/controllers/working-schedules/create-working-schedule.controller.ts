@@ -3,6 +3,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateWorkingSchedule } from 'src/domain/use-cases/working-schedules';
 import { HttpBadRequestError } from 'src/presentation/swagger';
 import { CreateWorkingScheduleVM } from 'src/presentation/view-models/working-schedules';
+import { WorkingScheduleVM } from 'src/presentation/view-models/working-schedules/working-schedule-vm';
 
 @ApiTags('Working Schedules')
 @Controller('restaurants')
@@ -13,6 +14,7 @@ export class CreateWorkingScheduleController {
   @ApiResponse({
     status: 201,
     description: 'Created',
+    type: WorkingScheduleVM,
   })
   @ApiResponse(HttpBadRequestError)
   @Post(':restaurantId/working-schedules')
