@@ -6,6 +6,7 @@ import {
   GetAllRestaurantsController,
   GetRestaurantByIdController,
   DeleteRestaurantController,
+  UpdateRestaurantController,
 } from './';
 
 @Module({
@@ -14,6 +15,7 @@ import {
     CreateRestaurantController,
     GetAllRestaurantsController,
     GetRestaurantByIdController,
+    UpdateRestaurantController,
     DeleteRestaurantController,
   ],
 })

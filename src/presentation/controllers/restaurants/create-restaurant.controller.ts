@@ -2,8 +2,10 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateRestaurant } from 'src/domain/use-cases/restaurants/create-restaurant';
 import { HttpBadRequestError } from 'src/presentation/swagger';
-import { CreateRestaurantVM } from 'src/presentation/view-models/restaurants/create/create-restaurant-vm';
-import { RestaurantResponseViewModel } from 'src/presentation/view-models/restaurants/restaurant-vm';
+import {
+  RestaurantResponseViewModel,
+  CreateRestaurantVM,
+} from 'src/presentation/view-models/restaurants';
 
 @ApiTags('Restaurants')
 @Controller('restaurants')

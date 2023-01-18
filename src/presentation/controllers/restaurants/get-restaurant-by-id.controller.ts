@@ -3,7 +3,7 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetRestaurantById } from 'src/domain/use-cases/restaurants';
 import { GetFormattedWorkingSchedule } from 'src/domain/use-cases/working-schedules/get-formatted-working-schedule';
 import { HttpNotFoundError } from 'src/presentation/swagger';
-import { GetRestaurantByIdViewModel } from 'src/presentation/view-models/restaurants/getById/get-restaurant-by-id-vm';
+import { GetRestaurantByIdViewModel } from 'src/presentation/view-models/restaurants/get-restaurant-by-id-vm';
 
 @ApiTags('Restaurants')
 @Controller('restaurants')
