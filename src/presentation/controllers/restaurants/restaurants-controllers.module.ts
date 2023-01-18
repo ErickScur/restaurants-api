@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { RestaurantsUseCasesModule } from 'src/data/use-cases-implementation/restaurants/restaurants-use-cases.module';
-import { CreateRestaurantController } from './create/create-restaurant.controller';
+import { CreateRestaurantController, GetAllRestaurantsController } from './';
 
 @Module({
   imports: [RestaurantsUseCasesModule],
-  controllers: [CreateRestaurantController],
+  controllers: [CreateRestaurantController, GetAllRestaurantsController],
 })
 export class RestaurantControllersModule {}
