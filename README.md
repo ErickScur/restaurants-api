@@ -1,73 +1,84 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API Restaurantes
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Live application:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+https://restaurants-api.up.railway.app/api-docs
 
-## Description
+<br>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Como rodar a aplicação:
 
-## Installation
+<br>
 
-```bash
-$ npm install
+### Opção 1 (Docker):
+
+1 - Gerar uma build:
+
+```
+docker build -t restaurants-api .
 ```
 
-## Running the app
+2 - Iniciar o container:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+docker run -p 5050:5050 .
 ```
 
-## Test
+### Opção 2 (Sem Docker):
 
-```bash
-# unit tests
-$ npm run test
+1 - Instalar as dependências:
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+npm install
 ```
 
-## Support
+2 - Iniciar a aplicação:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+npm run start:prod
+```
 
-## Stay in touch
+<br>
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Apresentação geral da aplicação:
 
-## License
+<br>
 
-Nest is [MIT licensed](LICENSE).
+### Propósito:
+
+O propósito principal no desenvolvimento desse projeto foi demonstrar meu conhecimento e habilidade no desenvolvimento de APIs REST utilizando Node e TypeScript, bem como a aplicação dos conceitos de Clean Architecture, Clean Code e S.O.L.I.D.
+
+<br>
+
+### Features:
+
+- CRUD Restaurantes
+- CRUD Horários de funcionamento
+- Endpoint para consultar se restaurante estara aberto na data fornecida
+
+<br>
+
+### Escolha das tecnologias:
+
+- NestJS: Um framework Node.js progressivo para criar aplicações server-side eficientes, confiáveis e escaláveis.;
+- Prisma: Object Relational Mapper (ORM) é uma ótima ferramenta para realizar a comunicação com diversos tipos de bancos de dados;
+
+<br>
+
+### Separação de camadas:
+
+#### Domain:
+
+Camada principal e mais interna da aplicação, nela que ficam as entidades, interfaces e casos de uso, nela que são definidas as regras de negócio da aplicação.
+
+#### Presentation:
+
+Essa camada é a parte onde acontece a interação com requisições externas. Essa camada é a porta de entrada para os efeitos que um ser humano, um aplicativo ou uma mensagem terão no domínio. As solicitações serão aceitas dessa camada e a resposta será moldada nessa camada e exibida ao usuário.
+
+#### Data:
+
+Camada responsável por implementar os protocolos dos casos de uso presentes na camada de domínio, nela são injetados os repositórios vindos da camada de infra para realizar a comunicação com banco de dados.
+
+#### Infra:
+
+Esta camada é a que acessa serviços externos, como banco de dados, sistemas de mensagens e serviços de e-mail.
