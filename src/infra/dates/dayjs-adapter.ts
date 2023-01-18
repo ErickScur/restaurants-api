@@ -50,4 +50,15 @@ export class DayjsAdapter implements DatesRepository {
 
     return date1ToDate.isAfter(date2ToDate) || date1ToDate.isSame(date2ToDate);
   }
+
+  getDay(date: Date): number {
+    return dayjs(date).day();
+  }
+
+  dateToStringTime(date: Date): string {
+    const hours = dayjs(date).hour();
+    const minutes = dayjs(date).minute();
+
+    return `${hours}:${minutes}`;
+  }
 }

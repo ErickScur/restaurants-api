@@ -7,6 +7,7 @@ import {
   GetRestaurantWorkingSchedulesImplementation,
   UpdateWorkingScheduleImplementation,
   DeleteWorkingScheduleImplementation,
+  CheckIsOpenedImplementation,
 } from './';
 import {
   GetFormattedWorkingSchedule,
@@ -14,6 +15,7 @@ import {
   GetRestaurantWorkingSchedules,
   UpdateWorkingSchedule,
   DeleteWorkingSchedule,
+  CheckIsOpened,
 } from 'src/domain/use-cases/working-schedules';
 import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/restaurants/restaurants-repositories.module';
 
@@ -44,6 +46,10 @@ import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/
       provide: DeleteWorkingSchedule,
       useClass: DeleteWorkingScheduleImplementation,
     },
+    {
+      provide: CheckIsOpened,
+      useClass: CheckIsOpenedImplementation,
+    },
   ],
   exports: [
     GetFormattedWorkingSchedule,
@@ -51,6 +57,7 @@ import { RestaurantsRepositoriesModule } from 'src/infra/db/prisma/repositories/
     GetRestaurantWorkingSchedules,
     UpdateWorkingSchedule,
     DeleteWorkingSchedule,
+    CheckIsOpened,
   ],
 })
 export class WorkingSchedulesUseCasesModule {}
