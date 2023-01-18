@@ -7,7 +7,9 @@ import {
   DeleteRestaurantRepository,
   GetAllRestaurantsRepository,
   GetRestaurantByIdRepository,
+  UpdateRestaurantRepository,
 } from 'src/data/protocols/db/restaurants';
+import { UpdateRestaurantModel } from 'src/domain/use-cases/restaurants';
 
 @Injectable()
 export class RestaurantsPrismaRepository
@@ -15,7 +17,8 @@ export class RestaurantsPrismaRepository
     CreateRestaurantRepository,
     GetAllRestaurantsRepository,
     GetRestaurantByIdRepository,
-    DeleteRestaurantRepository
+    DeleteRestaurantRepository,
+    UpdateRestaurantRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -61,6 +64,25 @@ export class RestaurantsPrismaRepository
     try {
       await this.prisma.restaurant.delete({
         where: { id },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(
+    id: string,
+    restaurant: UpdateRestaurantModel,
+  ): Promise<Restaurant> {
+    try {
+      return await this.prisma.restaurant.update({
+        where: { id },
+        data: {
+          ...restaurant,
+        },
+        include: {
+          workingSchedule: true,
+        },
       });
     } catch (error) {
       throw error;
