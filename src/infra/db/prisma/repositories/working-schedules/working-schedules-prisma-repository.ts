@@ -7,6 +7,7 @@ import {
   GetDayWorkingSchedulesRepository,
   DeleteWorkingScheduleRepository,
   UpdateWorkingScheduleRepository,
+  GetWorkingScheduleByIdRepository,
 } from 'src/data/protocols/db/working-schedules';
 import {
   CreateWorkingScheduleModel,
@@ -20,7 +21,8 @@ export class WorkingSchedulesPrismaRepository
     CreateWorkingScheduleRepository,
     GetDayWorkingSchedulesRepository,
     DeleteWorkingScheduleRepository,
-    UpdateWorkingScheduleRepository
+    UpdateWorkingScheduleRepository,
+    GetWorkingScheduleByIdRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -35,6 +37,16 @@ export class WorkingSchedulesPrismaRepository
           isOpened: true,
           startHour: true,
         },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getById(id: string): Promise<WorkingSchedule> {
+    try {
+      return await this.prisma.workingDay.findUnique({
+        where: { id },
       });
     } catch (error) {
       throw error;

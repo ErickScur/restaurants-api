@@ -4,4 +4,5 @@ export class WorkingSchedule {
   startHour?: string;
   endHour?: string;
   isOpened: boolean;
+  restaurantId?: string;
 }

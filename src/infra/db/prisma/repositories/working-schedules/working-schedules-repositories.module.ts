@@ -7,6 +7,7 @@ import {
   GetDayWorkingSchedulesRepository,
   DeleteWorkingScheduleRepository,
   UpdateWorkingScheduleRepository,
+  GetWorkingScheduleByIdRepository,
 } from 'src/data/protocols/db/working-schedules';
 
 @Module({
@@ -32,6 +33,10 @@ import {
       provide: UpdateWorkingScheduleRepository,
       useClass: WorkingSchedulesPrismaRepository,
     },
+    {
+      provide: GetWorkingScheduleByIdRepository,
+      useClass: WorkingSchedulesPrismaRepository,
+    },
   ],
   exports: [
     GetWorkingScheduleRepository,
@@ -39,6 +44,7 @@ import {
     GetDayWorkingSchedulesRepository,
     DeleteWorkingScheduleRepository,
     UpdateWorkingScheduleRepository,
+    GetWorkingScheduleByIdRepository,
   ],
 })
 export class WorkingScheduleRepositoriesModule {}

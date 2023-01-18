@@ -5,11 +5,13 @@ import {
   GetFormattedWorkingScheduleImplementation,
   CreateWorkingScheduleImplementation,
   GetRestaurantWorkingSchedulesImplementation,
+  UpdateWorkingScheduleImplementation,
 } from './';
 import {
   GetFormattedWorkingSchedule,
   CreateWorkingSchedule,
   GetRestaurantWorkingSchedules,
+  UpdateWorkingSchedule,
 } from 'src/domain/use-cases/working-schedules';
 
 @Module({
@@ -27,11 +29,16 @@ import {
       provide: GetRestaurantWorkingSchedules,
       useClass: GetRestaurantWorkingSchedulesImplementation,
     },
+    {
+      provide: UpdateWorkingSchedule,
+      useClass: UpdateWorkingScheduleImplementation,
+    },
   ],
   exports: [
     GetFormattedWorkingSchedule,
     CreateWorkingSchedule,
     GetRestaurantWorkingSchedules,
+    UpdateWorkingSchedule,
   ],
 })
 export class WorkingSchedulesUseCasesModule {}
