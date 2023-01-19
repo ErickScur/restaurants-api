@@ -21,7 +21,7 @@ docker build -t restaurants-api .
 2 - Iniciar o container:
 
 ```
-docker run -p 5050:5050 .
+docker run -p 3009:3009 .
 ```
 
 ### Opção 2 (Sem Docker):
