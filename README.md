@@ -35,7 +35,7 @@ npm install
 2 - Iniciar a aplicação:
 
 ```
-npm run start:prod
+npm run start
 ```
 
 <br>
